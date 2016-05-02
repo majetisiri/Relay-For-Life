@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+ <title> Level-2 </title>
+ <link rel='stylesheet' href='css/bootstrap.css'>
+	<link rel='stylesheet' href='css/game.css'>
+	<link rel='stylesheet' href='css/animate.css'>
+ <link href='https://fonts.googleapis.com/css?family=Pacifico|Oswald' rel='stylesheet' type='text/css'> <!-- font for relay for life and level-->
+</head>
+ 
+<body>
+	<h1> Lighty Bulb </h1>
+	<audio autoplay loop>
+	  <source src="img/music.mp3" type="audio/mpeg">
+	</audio>
+	<div class="col-md-offset-9">
+		<input class="restartButton" type="button" value="Restart" onclick="location.href='http://www.cs.odu.edu/~smajeti/RelayForLife/game.html'">
+	</div>
+	<section id ="2">
+		<h2 class="col-md-offset-2">Level-2<h2>
+		<div class="col-md-offset-2">
+			<tab5></tab5>
+			<img id="imgbulb1"  src="img/bulboff.jpg" alt="off bulb">
+			<tab1></tab1>
+			<img id="imgbulb2"  src="img/bulboff.jpg" alt="off bulb">
+			<tab1></tab1>
+			<img id="imgbulb3"  src="img/bulboff.jpg" alt="off bulb">
+		</div>
+		<br>
+		<div class="col-md-offset-2">
+			<img id="imgbutton1" onclick="checkButtonStatus(buttonStatus,this.id)"  src="img/offbutton.jpg" alt="off button">
+			<img id="imgbutton2" onclick="checkButtonStatus(buttonStatus,this.id)"  src="img/offbutton.jpg" alt="off button">
+			<img id="imgbutton3" onclick="checkButtonStatus(buttonStatus,this.id)"  src="img/offbutton.jpg" alt="off button">
+			<tab2></tab2>
+			<img id="imgbutton4" onclick="checkButtonStatus(buttonStatus,this.id)"  src="img/offbutton.jpg" alt="off button">
+			<img id="imgbutton5" onclick="checkButtonStatus(buttonStatus,this.id)"  src="img/offbutton.jpg" alt="off button">
+			<img id="imgbutton6" onclick="checkButtonStatus(buttonStatus,this.id)"  src="img/offbutton.jpg" alt="off button">
+			<tab2></tab2>
+			<img id="imgbutton7" onclick="checkButtonStatus(buttonStatus,this.id)"  src="img/offbutton.jpg" alt="off button">
+			<img id="imgbutton8" onclick="checkButtonStatus(buttonStatus,this.id)"  src="img/offbutton.jpg" alt="off button">
+			<img id="imgbutton9" onclick="checkButtonStatus(buttonStatus,this.id)"  src="img/offbutton.jpg" alt="off button">
+		</div>
+	</section>
+	
+<script>
+	function changeButton(id) {
+		<!-- console.log(id) -->
+		var image = document.getElementById(id);
+		<!-- console.log(image.alt); -->
+		if (image.src.match("offbutton")) {
+			image.src = "img/onButton.jpg";
+		}
+		checkBulbStatus(bulbStatus, id)
+	}
+	
+	function checkBulbStatus(bulbStatus, id){
+		console.log(bulbStatus)
+		if(bulbStatus[0]['switch'] == id){
+			console.log("im here");
+			var image = document.getElementById(bulbStatus[0]['bulb']);
+			if (image.src.match("bulboff")) {
+			image.src = "img/bulbon.jpg";
+			bulbStatus[0]['status']= true;
+			}
+		}
+		if(bulbStatus[1]['switch'] == id){
+			console.log("im here");
+			var image = document.getElementById(bulbStatus[1]['bulb']);
+			if (image.src.match("bulboff")) {
+			image.src = "img/bulbon.jpg";
+			bulbStatus[1]['status']= true;
+			}
+		}
+		if(bulbStatus[2]['switch'] == id){
+			console.log("im here");
+			var image = document.getElementById(bulbStatus[2]['bulb']);
+			if (image.src.match("bulboff")) {
+			image.src = "img/bulbon.jpg";
+			bulbStatus[2]['status']= true;
+			}
+		}
+		
+		declareWinner(bulbStatus)
+	}
+	
+	function declareWinner(bulbStatus){
+		if(bulbStatus[0]['status']== true && bulbStatus[1]['status']== true ||
+		bulbStatus[0]['status']== true && bulbStatus[2]['status'] == true ||
+		bulbStatus[1]['status']== true && bulbStatus[2]['status'] == true){
+			window.location.replace("http://www.cs.odu.edu/~smajeti/RelayForLife/level3.html");
+		}
+	}
+	
+	function initializeButtonStatus() {
+		var	list=[];
+		for (i=1; i< 10; i++){
+			dict = {};
+			dict['button'] ="imgbutton"+i,
+			dict['status'] = false;
+			list.push(dict);
+		}
+		return list;
+	}
+	
+	function initializeBulbStatus() {
+		var	list1=[];
+		for (i=1; i< 4; i++){
+			dict = {};
+			dict['bulb'] ="imgbulb"+i,
+			dict['status'] = false;
+			if( i==1){
+				var button = "imgbutton"+randomIntFromInterval(1,3);
+				dict['switch'] = button;
+			}
+			if( i==2){
+				var button = "imgbutton"+randomIntFromInterval(4,6);
+				dict['switch'] = button;
+			}
+			if( i==3){
+				var button = "imgbutton"+randomIntFromInterval(7,9);
+				dict['switch'] = button;
+			}
+			list1.push(dict);
+		}
+		return list1;
+		console.log(list1)
+	}
+
+	function checkButtonStatus(buttonStatus, id) {
+		var count =0;
+		if(buttonStatus[count]['button']== id || buttonStatus[count+1]['button']== id || buttonStatus[count+2]['button']== id ){
+			if(buttonStatus[count]['status']==true || buttonStatus[count+1]['status']==true || buttonStatus[count+2]['status']==true){
+					alert("cannot be done");
+			}else{
+				if(buttonStatus[count]['button']== id && buttonStatus[count]['status']==false){
+					changeButton(id);
+					buttonStatus[count]['status']=true;
+				}else if(buttonStatus[count+1]['button']== id && buttonStatus[count+1]['status']==false){
+					changeButton(id);
+					buttonStatus[count+1]['status']=true;
+				}else{
+					changeButton(id);
+					buttonStatus[count+2]['status']=true;
+				}
+			}
+		}
+		else if(buttonStatus[count+3]['button']== id || buttonStatus[count+4]['button']== id || buttonStatus[count+5]['button']== id ){
+			if(buttonStatus[count +3]['status']==true || buttonStatus[count+4]['status']==true || buttonStatus[count+5]['status']==true){
+					alert("cannot be done");
+			}else{
+				if(buttonStatus[count+3]['button']== id && buttonStatus[count+3]['status']==false){
+					changeButton(id);
+					buttonStatus[count+3]['status']=true;
+				}else if(buttonStatus[count+4]['button']== id && buttonStatus[count+4]['status']==false){
+					changeButton(id);
+					buttonStatus[count+4]['status']=true;
+				}else{
+					changeButton(id);
+					buttonStatus[count+5]['status']=true;
+				}
+			}
+		}
+		else {
+			if(buttonStatus[count +6]['status']==true || buttonStatus[count+7]['status']==true || buttonStatus[count+8]['status']==true){
+					alert("cannot be done");
+			}else{
+				if(buttonStatus[count+6]['button']== id && buttonStatus[count+6]['status']==false){
+					changeButton(id);
+					buttonStatus[count+6]['status']=true;
+				}else if(buttonStatus[count+7]['button']== id && buttonStatus[count+7]['status']==false){
+					changeButton(id);
+					buttonStatus[count+7]['status']=true;
+				}else{
+					changeButton(id);
+					buttonStatus[count+8]['status']=true;
+				}
+			}
+		}
+	}
+	
+	function randomIntFromInterval(min,max){
+		return Math.floor(Math.random()*(max-min+1)+min);
+	}
+	
+	buttonStatus=initializeButtonStatus()
+	bulbStatus=initializeBulbStatus()
+</script>
+</body>
+
+</html>

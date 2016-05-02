@@ -1,0 +1,53 @@
+body {
+	background-color: black;
+}
+
+h1{
+	font-family:'Pacifico', cursive;
+	text-align: center;
+	font-size: 80px;
+	color: white;
+}
+
+h2{
+	font-family: font-family: 'Oswald', sans-serif;
+	font-weight: bold;
+	color: white;
+}
+
+h3{
+color: white;
+}
+#imgbutton1,#imgbutton2,#imgbutton3,#imgbutton4,#imgbutton5,#imgbutton6,#imgbutton7,#imgbutton8, #imgbutton9{
+	width: 90px;
+	height: 70px;
+}
+
+
+#imgbulb1, #imgbulb2, #imgbulb3,#imgbulb4{
+	width: 200px;
+	height: 200px;
+	transform: rotate(180deg);
+	padding-left:50px;
+	padding-right:50px;
+}
+
+section{
+	padding-top:3cm;
+}
+
+td{
+	width: 5;
+}
+
+tab1{ padding-left: 7em;}
+tab2{ padding-left: 5em;}
+tab3{ padding-left: 3em;}
+tab4{ padding-left: 4em;}
+tab5{ padding-left: 2em;}
+
+.restartButton{
+	background-color: white;
+	border: none;
+	font-size: 20px;
+}

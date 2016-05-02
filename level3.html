@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+ <title> Level-3 </title>
+ <link rel='stylesheet' href='css/bootstrap.css'>
+	<link rel='stylesheet' href='css/game.css'>
+	<link rel='stylesheet' href='css/animate.css'>
+ <link href='https://fonts.googleapis.com/css?family=Pacifico|Oswald' rel='stylesheet' type='text/css'> <!-- font for relay for life and level-->
+</head>
+ 
+<body>
+	<h1> Lighty Bulb </h1>
+	<audio autoplay loop>
+	  <source src="img/music.mp3" type="audio/mpeg">
+	</audio>
+	<div class="col-md-offset-9">
+		<input class="restartButton" type="button" value="Restart" onclick="location.href='http://www.cs.odu.edu/~smajeti/RelayForLife/game.html'">
+	</div>
+	<section id="3">
+		<h2 class="col-md-offset-2">Level-3<h2>
+		<div class="col-md-offset-5">
+			<img id="imgbulb1" src="img/bulboff.jpg" alt="off bulb">
+		</div>
+		<br>
+		<div class="col-md-offset-4">
+			<img id="imgbutton1" onclick="checkButtonStatus(buttonStatus,this.id)"  src="img/offbutton.jpg" alt="off button">
+			<img id="imgbutton2" onclick="checkButtonStatus(buttonStatus,this.id)"  src="img/offbutton.jpg" alt="off button">
+			<img id="imgbutton3" onclick="checkButtonStatus(buttonStatus,this.id)" src="img/offbutton.jpg" alt="off button">
+			<img id="imgbutton4" onclick="checkButtonStatus(buttonStatus,this.id)"  src="img/offbutton.jpg" alt="off button">
+			<img id="imgbutton5" onclick="checkButtonStatus(buttonStatus,this.id)"  src="img/offbutton.jpg" alt="off button">
+		<div>
+		
+	</section>
+	
+<script>
+	function changeButton(id) {
+		<!-- console.log(id) -->
+		var image = document.getElementById(id);
+		<!-- console.log(image.alt); -->
+		if (image.src.match("offbutton")) {
+			image.src = "img/onButton.jpg";
+		}
+		checkBulbStatus(bulbStatus, id)
+	}
+	
+	function checkBulbStatus(bulbStatus, id){
+		console.log(bulbStatus)
+		if(bulbStatus[0]['switch'] == id){
+			console.log("im here");
+			var image = document.getElementById(bulbStatus[0]['bulb']);
+			if (image.src.match("bulboff")) {
+			image.src = "img/bulbon.jpg";
+			bulbStatus[0]['status']= true;
+			}
+		}
+		
+		declareWinner(bulbStatus)
+	}
+	
+	function declareWinner(bulbStatus){
+		if(bulbStatus[0]['status']== true){
+			window.location.replace("http://www.cs.odu.edu/~smajeti/RelayForLife/won.html");
+		}
+	}
+	
+	function initializeButtonStatus() {
+		var	list=[];
+		for (i=1; i< 6; i++){
+			dict = {};
+			dict['button'] ="imgbutton"+i,
+			dict['status'] = false;
+			list.push(dict);
+		}
+		return list;
+	}
+	
+	function initializeBulbStatus() {
+		var	list1=[];
+		for (i=1; i< 2; i++){
+			dict = {};
+			dict['bulb'] ="imgbulb"+i,
+			dict['status'] = false;
+			if( i==1){
+				var button = "imgbutton"+randomIntFromInterval(1,5);
+				dict['switch'] = button;
+			}
+			list1.push(dict);
+		}
+		return list1;
+		console.log(list1)
+	}
+
+	function checkButtonStatus(buttonStatus, id) {
+		var count =0;
+		if(buttonStatus[count]['button']== id || buttonStatus[count+1]['button']== id || buttonStatus[count+2]['button']== id || buttonStatus[count+3]['button']== id|| buttonStatus[count+4]['button']== id){
+			if(buttonStatus[count]['status']==true || buttonStatus[count+1]['status']==true || buttonStatus[count+2]['status']==true || buttonStatus[count+3]['status']==true || buttonStatus[count+4]['status']==true){
+					alert("cannot be done");
+			}else{
+				if(buttonStatus[count]['button']== id && buttonStatus[count]['status']==false){
+					changeButton(id);
+					buttonStatus[count]['status']=true;
+				}else if(buttonStatus[count+1]['button']== id && buttonStatus[count+1]['status']==false){
+					changeButton(id);
+					buttonStatus[count+1]['status']=true;
+				}else if(buttonStatus[count+2]['button']== id && buttonStatus[count+2]['status']==false){
+					changeButton(id);
+					buttonStatus[count+2]['status']=true;
+				}else if(buttonStatus[count+3]['button']== id && buttonStatus[count+3]['status']==false){
+					changeButton(id);
+					buttonStatus[count+3]['status']=true;
+				}else{
+					changeButton(id);
+					buttonStatus[count+4]['status']=true;
+				}
+			}
+		}
+	}
+	
+	function randomIntFromInterval(min,max){
+		return Math.floor(Math.random()*(max-min+1)+min);
+	}
+	
+	buttonStatus=initializeButtonStatus()
+	bulbStatus=initializeBulbStatus()
+</script>
+</body>
+
+</html>
